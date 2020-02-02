@@ -1,0 +1,81 @@
+<template>
+<div>
+  <table class="plugin-list-table" cellspacing="0" cellpadding="0" style="width:100%;margin:10px 0px 10px 0px;">
+    <tr style="background:#eee;padding:10px; width:100%;margin-bottom:10px;">
+      <th style="width:200px;">Plugin</th>
+      <th style="border-right:1px solid #eee;">Request Settings</th>
+      <th style="border-right:1px solid #eee;">Response Settings</th>
+    </tr>
+    <tr v-for="plugin in plugins" class="plugin">
+      <td style="border-right:1px solid #eee;">{{ plugin.name }}</td>
+      <td style="border-right:1px solid #eee;">
+        <div v-for="setting in plugin.reqSettings">
+          <div style="float:left;line-height:32px;margin-left:10px;" >{{ setting.name }}:</div>
+          <Select v-if="setting.type=='select'" v-model="setting.currentValue" style="width:auto;margin-left:10px;float:left;">
+            <Option v-for="value in setting.values" :value="value" :key="value">{{ value }}</Option>
+          </Select>
+        </div>
+        <div v-show="plugin.reqSettings.length == 0">
+          -
+        </div>
+        <div style="clear:both;"></div>
+      </td>
+      <td>
+        <div v-for="setting in plugin.respSettings">
+          <div style="float:left;line-height:32px;margin-left:10px;" >{{ setting.name }}:</div>
+          <Select v-if="setting.type=='select'" v-model="setting.currentValue" style="min-width:120px;width:auto;margin-left:10px;float:left;">
+            <Option v-for="value in setting.values" :value="value" :key="value">{{ value }}</Option>
+          </Select>
+        </div>
+        <div v-show="plugin.respSettings.length == 0">
+          -
+        </div>
+        <div style="clear:both;"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</template>
+
+<script>
+export default {
+  name: 'PluginSettings',
+  data () {
+    return {
+      plugins:[]
+    }
+  },
+  created () {
+    this.getData()
+  },
+  methods: {
+    getData () {
+      console.log("aaa")
+      this.$api.get('plugin/getPluginSettings', null, r => {
+        this.plugins = r.data
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
+.plugin-list-table{
+  border:1px solid #eee;
+  border-bottom:none;
+}
+.plugin-list-table th{
+  padding: 6px 0px;
+  text-align:center;
+}
+.plugin-list-table td{
+  padding: 8px 0px;
+  text-align:center;
+}
+.plugin-list-table td{
+  border-bottom: 1px solid #eee;
+}
+.plugin:hover{
+  background:#d5e8fc;
+}
+</style>

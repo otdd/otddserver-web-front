@@ -1,0 +1,170 @@
+<template>
+<div class="clear">
+	<Menu></Menu>
+	<div class="main-panel">
+    	<Card dis-hover>
+			<p slot="title" style="font-weight:normal">task-details</p>
+			<div style="float:left;">
+				<div class="item">
+					<span class="label">Task Id:</span>
+					<span class="value">{{id}}</span>
+				</div>
+				<div class="item">
+					<span class="label">Module Id:</span>
+					<span class="value">{{task.moduleId}}</span>
+				</div>
+				<div class="item">
+					<span class="label">Create Time:</span>
+					<span class="value">{{task.createTime}}</span>
+				</div>
+				<div style="clear:both;"></div>
+				<div class="item">
+					<span class="label">Target Ip:</span>
+					<span class="value">{{task.target.ip}}</span>
+				</div>
+				<div class="item">
+					<span class="label">Target Port:</span>
+					<span class="value">{{task.target.port}}</span>
+				</div>
+				<div style="clear:both;"></div>
+				<div class="item">
+					<span class="label">Mock ThirdParty Calls:</span>
+					<span class="value">{{task.config.mockThirdPartyCalls}}</span>
+				</div class="item">
+				<div class="item" v-bind:class="{hidden:hidePassthoughConnections}">
+					<span class="label">Connections That Won't Be Mocked:</span>
+					<span class="value">{{task.config.passthoughConnections}}</span>
+				</div>
+				<div style="clear:both;"></div>
+				<div class="item">
+					<span class="label">Status:</span>
+					<span class="value">{{task.status}}</span>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+			<div>
+				<Button type="primary" v-on:click="rerun" style="position:relative;top:22px;">Rerun</Button>
+			</div>
+			<div style="clear:both;"></div>
+
+			<div style="float:left;margin-top:10px;border-top:1px dashed #CCC;width:100%;padding-top:12px;">
+				<div v-if="task.tests.type==0">
+					<span class="label" style="float:left;">Tests:</span>
+					<span class="value" style="margin-right:20px;float:left;" v-for="id in task.tests.testIds">{{id}}</span>
+				</div>
+				<div v-else>
+					<div class="range-item">
+						<span class="label">Test Range:</span>
+					</div>
+					<div v-if="task.tests.query.startTime!=null" class="range-item">
+						<span class="label">Start Time:</span>
+						<span class="value" >{{task.tests.query.startTime}}</span>
+					</div>
+					<div v-if="task.tests.query.endTime!=null" class="range-item">
+						<span class="label">End Time:</span>
+						<span class="value" >{{task.tests.query.startTime}}</span>
+					</div>
+					<div v-if="task.tests.query.url!=null" class="range-item">
+						<span class="label">Url:</span>
+						<span class="value" >{{task.tests.query.url}}</span>
+					</div>
+					<div v-if="task.tests.query.testId!=null" class="range-item">
+						<span class="label">Url:</span>
+						<span class="value" >{{task.tests.query.testId}}</span>
+					</div>
+					<div v-if="task.tests.query.clientRequest!=null" class="range-item">
+						<span class="label">Client Request Contains:</span>
+						<span class="value" >{{task.tests.query.clientRequest}}</span>
+					</div>
+					<div v-if="task.tests.query.clientResponse!=null" class="range-item">
+						<span class="label">Client Response Contains:</span>
+						<span class="value" >{{task.tests.query.clientResponse}}</span>
+					</div>
+					<div v-if="task.tests.query.thirdPartyRequests!=null" class="range-item">
+						<span class="label">Third-Party Requests Contains:</span>
+						<span class="value" >{{task.tests.query.thirdPartyRequests}}</span>
+					</div>
+					<div v-if="task.tests.query.thirdPartyResponses!=null" class="range-item">
+						<span class="label">Third-Party Responses Contains:</span>
+						<span class="value" >{{task.tests.query.thirdPartyResponses}}</span>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+			<div style="clear:both;"></div>
+		</Card>
+
+		<div class="test-run-detail">
+			<div class="test-list">
+				
+			</div>
+			<div class="test-report">
+				<div class="online-test"></div>
+				<div class="actual-test"></div>
+			</div>
+		</div>
+
+	</div>
+</div>
+</template>
+
+<script>
+import Menu from '../components/Menu.vue'
+export default {
+  name: 'Task',
+  components: { Menu },
+  data () {
+    return {
+    	id:parseInt(this.$route.params.id),
+    	hidePassthoughConnections:true,
+    	task:{
+    		target:{},
+    		config:{},
+    		tests:{
+    			query:{}
+    		}
+
+    	}
+    }
+  },
+  created () {
+		this.getData()
+  },
+  methods: {
+    getData () {
+      this.$api.post('testrunner/getTask', {id:this.id}, r => {
+        this.task = r.data
+        if(this.task.config.passthoughConnections!=''){
+        	this.hidePassthoughConnections = false
+        }
+      })
+    },
+    rerun(){
+
+    }
+  }
+}
+</script>
+
+<style scoped>
+.hidden{
+	display:none;
+}
+.label, .value{
+	font-size:12px;
+}
+.label{
+	color:#888;
+}
+.item{
+	float:left;
+	margin-right:20px;
+	min-width:200px;
+	text-align:left;
+}
+.range-item{
+	float:left;
+	margin-right:20px;
+}
+</style>
