@@ -1,7 +1,7 @@
 <template>
 <div style="margin-bottom:20px;">
-	<div class="header" style="background:#2D8CF0;width:100%;height:40px;" v-on:click="onHeaderClicked()">
-		<img src="../assets/logo.png" width=135 height=40 style="float:left;margin-left:0px;"/>
+	<div class="header" style="background:#458CE9;width:100%;height:40px;" v-on:click="onHeaderClicked()">
+		<img src="../assets/logo.png" width=100 height=40 style="float:left;margin-left:0px;"/>
 		<div style="float:right;margin-right:20px;line-height:40px;color:white;">{{moduleName}}</div>
 		<div style="clear:both;"></div>
 	</div>

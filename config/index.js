@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
         '/otdd/**': {
-            target: 'http://localhost:8000', // 你接口的域名
+            target: 'http://localhost:8080', // 你接口的域名
             secure: false,
             changeOrigin: false,
             timeout: 1920000,
