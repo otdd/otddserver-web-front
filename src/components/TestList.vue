@@ -84,7 +84,7 @@
         <p slot="header" style="color:#666;text-align:center">
           <span style="position: relative;top: 1px;">the details</span>
         </p>
-        <div style="height:400px;word-break:break-all;overflow-y:scroll;padding-bottom:10px;">
+        <div style="height:400px;word-break:break-all;overflow-y:auto;padding-bottom:10px;">
           <Tabs v-model="selectedTestDetailTab" style="height: 390px;" @on-click="onDetailTabClicked">
             <TabPane label="raw content" name="content">
               <div style="word-break:break-all;padding-bottom:10px;" v-html="rawContent">
