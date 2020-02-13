@@ -87,7 +87,7 @@
         <div style="height:400px;word-break:break-all;overflow-y:scroll;padding-bottom:10px;">
           <Tabs v-model="selectedTestDetailTab" style="height: 390px;" @on-click="onDetailTabClicked">
             <TabPane label="raw content" name="content">
-              <div style="height:400px;word-break:break-all;overflow-y:scroll;padding-bottom:10px;" v-html="rawContent">
+              <div style="word-break:break-all;padding-bottom:10px;" v-html="rawContent">
               </div>
             </TabPane>
             <TabPane label="ddl" name="ddl">
@@ -106,7 +106,7 @@
                 <div style="clear:both;"></div>
               </div>
               <div>
-                <div style="height:400px;word-break:break-all;overflow-y:scroll;padding-bottom:10px;" v-html="parseToDDLResult.ddl">
+                <div style="word-break:break-all;padding-bottom:10px;" v-html="parseToDDLResult.ddl">
                 </div>
               </div>
             </TabPane>
