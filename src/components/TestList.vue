@@ -590,7 +590,7 @@ export default {
 }
 .test-detail{
   float: right;
-  width: 568px;
+  #width: 568px;
   height: 880px;
   overflow: auto;
   border: 1px solid #CCC;
