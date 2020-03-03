@@ -2,6 +2,8 @@
 
 > otdd web-front project
 
+This project is the otdd server's front page project.
+
 ## Build Setup
 
 ``` bash
